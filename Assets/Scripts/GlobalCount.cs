@@ -5,29 +5,34 @@ using UnityEngine.UI;
 
 public class GlobalCount : MonoBehaviour
 {
-    public static int CoinCount;
-    public static int WoodCount;
-    public static int StoneCount;
+    public static float CoinCount;
+    public static float WoodCount;
+    public static float StoneCount;
     public GameObject CoinCountDisplay;
     public GameObject WoodCountDisplay;
     public GameObject StoneCountDisplay;
-    public int InternalCoin;
-    public int InternalWood;
-    public int InternalStone;
+    public float InternalCoin;
+    public float InternalWood;
+    public float InternalStone;
+    private float InternalCoinDisplay;
+    private float InternalWoodDisplay;
+    private float InternalStoneDisplay;
 
     private void Update()
     {
         //Coins
-
         InternalCoin = CoinCount;
-        CoinCountDisplay.GetComponent<Text>().text = "Coins: " + InternalCoin;
+        InternalCoinDisplay = Mathf.Round(InternalCoin * 100f) / 100f;
+        CoinCountDisplay.GetComponent<Text>().text = "Coins: " + InternalCoinDisplay;
 
         //Wood
         InternalWood = WoodCount;
-        WoodCountDisplay.GetComponent<Text>().text = "Wood: " + InternalWood;
+        InternalWoodDisplay = Mathf.Round(InternalWood * 100f) / 100f;
+        WoodCountDisplay.GetComponent<Text>().text = "Wood: " + InternalWoodDisplay;
 
         //Stone
         InternalStone = StoneCount;
-        StoneCountDisplay.GetComponent<Text>().text = "Stone: " + InternalStone;
+        InternalStoneDisplay = Mathf.Round(InternalStone * 100f) / 100f;
+        StoneCountDisplay.GetComponent<Text>().text = "Stone: " + InternalStoneDisplay;
     }
 }

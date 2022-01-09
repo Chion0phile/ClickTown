@@ -1,19 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PurchaseLog : MonoBehaviour
 {
     public GameObject AutoCoinButton;
-    public GameObject AutoWoodButton;
-    public GameObject AutoStoneButton;
+    public GameObject AutoCoinButtonText;
+    public GameObject FakeAutoCoinButton;
+    public GameObject FakeAutoCoinButtonText;
     public GameObject ClickingMultiplierButton;
-    public bool FirstTimeAutoCoin = false;
-    public bool FirstTimeAutoWood = false;
-    public bool FirstTimeAutoStone = false;
-    public int AutoCoinUnlockAmount;
-    public int AutoWoodUnlockAmount;
-    public int AutoStoneUnlockAmount;
+    public GameObject ClickingMultiplierButtonText;
+    public GameObject FakeClickingMultiplierButton;
+    public GameObject FakeClickingMultiplierButtonText;
+    public GameObject AutoWoodButton;
+    public GameObject AutoWoodButtonText;
+    public GameObject FakeAutoWoodButton;
+    public GameObject FakeAutoWoodButtonText;
+    public GameObject AutoStoneButton;
+    public GameObject AutoStoneButtonText;
+    public GameObject FakeAutoStoneButton;
+    public GameObject FakeAutoStoneButtonText;
+    public static int AutoCoinUnlockAmount = 50;
+    public float InternalAutoCoinUnlockAmount;
+    public float InternalCoin;
+    public static int ClickingMultiplierUnlockAmount = 25;
+    public float InternalClickingMultiplierUnlockAmount;
+    public static int AutoWoodUnlockAmount = 500;
+    public float InternalAutoWoodUnlockAmount;
+    public float InternalWood;
+    public static int AutoStoneUnlockAmount = 5000;
+    public float InternalAutoStoneUnlockAmount;
+    public static int AutoStoneWoodUnlockAmount = 1000;
+    public float InternalAutoStoneWoodUnlockAmount;
+    public float InternalStone;
 
     private void Start()
     {
@@ -24,54 +44,76 @@ public class PurchaseLog : MonoBehaviour
 
     public void Update()
     {
+
+        InternalCoin = GlobalCount.CoinCount;
+        InternalWood = GlobalCount.WoodCount;
+        InternalStone = GlobalCount.StoneCount;
+
+        //ClickMultiplier
+
+        InternalClickingMultiplierUnlockAmount = ClickingMultiplierUnlockAmount;
+        ClickingMultiplierButtonText.GetComponent<Text>().text = "Clicking Multiplier - " + InternalClickingMultiplierUnlockAmount + " Coins";
+        FakeClickingMultiplierButtonText.GetComponent<Text>().text = "Clicking Multiplier - " + InternalClickingMultiplierUnlockAmount + " Coins";
+        if(InternalCoin >= InternalClickingMultiplierUnlockAmount)
+        {
+            FakeClickingMultiplierButton.SetActive(false);
+            ClickingMultiplierButton.SetActive(true);
+        }
+        else
+        {
+            FakeClickingMultiplierButton.SetActive(true);
+            ClickingMultiplierButton.SetActive(false);
+        }
+
         //Coins
 
-        if(GlobalCount.CoinCount == AutoCoinUnlockAmount)
-        {
-            FirstTimeAutoCoin = true;
-        }
+        InternalAutoCoinUnlockAmount = AutoCoinUnlockAmount;
+        AutoCoinButtonText.GetComponent<Text>().text = "Auto Clicker - " + InternalAutoCoinUnlockAmount + " Coins";
+        FakeAutoCoinButtonText.GetComponent<Text>().text = "Auto Clicker - " + InternalAutoCoinUnlockAmount + " Coins";
 
-        if (FirstTimeAutoCoin == true)
+        if (InternalCoin >= InternalAutoCoinUnlockAmount)
         {
+            FakeAutoCoinButton.SetActive(false);
             AutoCoinButton.SetActive(true);
         }
-
-        if(AutoCoins.AutoCoinEnabled == true)
+        else
         {
+            FakeAutoCoinButton.SetActive(true);
             AutoCoinButton.SetActive(false);
         }
 
         //Wood
 
-        if(GlobalCount.CoinCount == AutoWoodUnlockAmount)
-        {
-            FirstTimeAutoWood = true;
-        }
+        InternalAutoWoodUnlockAmount = AutoWoodUnlockAmount;
+        AutoWoodButtonText.GetComponent<Text>().text = "Auto Wood - " + InternalAutoWoodUnlockAmount + " Coins";
+        FakeAutoWoodButtonText.GetComponent<Text>().text = "Auto Wood - " + InternalAutoWoodUnlockAmount + " Coins";
 
-        if(FirstTimeAutoWood == true)
+        if (InternalCoin >= InternalAutoWoodUnlockAmount)
         {
+            FakeAutoWoodButton.SetActive(false);
             AutoWoodButton.SetActive(true);
         }
-
-        if(AutoWood.AutoWoodEnabled == true)
+        else
         {
+            FakeAutoWoodButton.SetActive(true);
             AutoWoodButton.SetActive(false);
         }
 
         //Stone
 
-        if(GlobalCount.StoneCount == AutoStoneUnlockAmount)
-        {
-            FirstTimeAutoStone = true;
-        }
+        InternalAutoStoneUnlockAmount = AutoStoneUnlockAmount;
+        InternalAutoStoneWoodUnlockAmount = AutoStoneWoodUnlockAmount;
+        AutoStoneButtonText.GetComponent<Text>().text = "Auto Stone - " + InternalAutoStoneUnlockAmount + " Coins & " + InternalAutoStoneWoodUnlockAmount + " Wood";
+        FakeAutoStoneButtonText.GetComponent<Text>().text = "Auto Stone " + InternalAutoStoneUnlockAmount + " Coins & " + InternalAutoStoneWoodUnlockAmount + " Wood";
 
-        if(FirstTimeAutoStone == true)
+        if(InternalCoin >= InternalAutoStoneUnlockAmount && InternalWood >= InternalAutoStoneWoodUnlockAmount)
         {
+            FakeAutoStoneButton.SetActive(false);
             AutoStoneButton.SetActive(true);
         }
-
-        if(AutoStone.AutoStoneEnabled == true)
+        else
         {
+            FakeAutoStoneButton.SetActive(true);
             AutoStoneButton.SetActive(false);
         }
     }
