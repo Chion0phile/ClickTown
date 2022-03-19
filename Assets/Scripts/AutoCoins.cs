@@ -9,13 +9,14 @@ public class AutoCoins : MonoBehaviour
     public static bool AutoCoinEnabled = false;
     public bool InternalAutoCoinEnabled;
     public bool CreatingCoin = false;
-    public static float CoinIncrease = 0.5f;
-    public float InternalCoinIncrease;
+    public static float CoinIncrease;
+    public static float InternalCoinIncrease;
     public static float CoinSeconds = 3.2f;
     public float InternalCoinSeconds;
     public float AutoCoinLevel;
     public float CoinSecondsLevel;
     public float InternalAutoCoinLevel;
+    public static float AutoCoinStatLevel;
 
     public void Start()
     {
@@ -30,6 +31,7 @@ public class AutoCoins : MonoBehaviour
         }
         GlobalCount.CoinCount -= PurchaseLog.AutoCoinUnlockAmount;
         PurchaseLog.AutoCoinUnlockAmount *= 2;
+        AutoCoinStatLevel += 1;
         AutoCoinLevel += 0.5f;
         CoinSecondsLevel += 0.2f;
         InternalCoinIncrease = CoinIncrease + AutoCoinLevel;
@@ -50,7 +52,7 @@ public class AutoCoins : MonoBehaviour
     IEnumerator CreateCoin ()
     {
         GlobalCount.CoinCount += InternalCoinIncrease;
-        yield return new WaitForSeconds(InternalCoinSeconds);
+        yield return new WaitForSeconds(1); //InternalCoinSeconds
         CreatingCoin = false;
     }
 }

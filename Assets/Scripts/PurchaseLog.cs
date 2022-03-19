@@ -21,6 +21,10 @@ public class PurchaseLog : MonoBehaviour
     public GameObject AutoStoneButtonText;
     public GameObject FakeAutoStoneButton;
     public GameObject FakeAutoStoneButtonText;
+    public GameObject AutoCoinStatDisplay;
+    public GameObject AutoWoodStatDisplay;
+    public GameObject AutoStoneStatDisplay;
+    public GameObject ClickingMultiplierStatDisplay;
     public static int AutoCoinUnlockAmount = 50;
     public float InternalAutoCoinUnlockAmount;
     public float InternalCoin;
@@ -54,7 +58,9 @@ public class PurchaseLog : MonoBehaviour
         InternalClickingMultiplierUnlockAmount = ClickingMultiplierUnlockAmount;
         ClickingMultiplierButtonText.GetComponent<Text>().text = "Clicking Multiplier - " + InternalClickingMultiplierUnlockAmount + " Coins";
         FakeClickingMultiplierButtonText.GetComponent<Text>().text = "Clicking Multiplier - " + InternalClickingMultiplierUnlockAmount + " Coins";
-        if(InternalCoin >= InternalClickingMultiplierUnlockAmount)
+        ClickingMultiplierStatDisplay.GetComponent<Text>().text = "Level: " + "CPS: ";
+
+        if (InternalCoin >= InternalClickingMultiplierUnlockAmount)
         {
             FakeClickingMultiplierButton.SetActive(false);
             ClickingMultiplierButton.SetActive(true);
@@ -70,6 +76,7 @@ public class PurchaseLog : MonoBehaviour
         InternalAutoCoinUnlockAmount = AutoCoinUnlockAmount;
         AutoCoinButtonText.GetComponent<Text>().text = "Auto Clicker - " + InternalAutoCoinUnlockAmount + " Coins";
         FakeAutoCoinButtonText.GetComponent<Text>().text = "Auto Clicker - " + InternalAutoCoinUnlockAmount + " Coins";
+        AutoCoinStatDisplay.GetComponent<Text>().text = "Level: " + AutoCoins.AutoCoinStatLevel + " CPS: " + AutoCoins.InternalCoinIncrease;
 
         if (InternalCoin >= InternalAutoCoinUnlockAmount)
         {
@@ -87,6 +94,7 @@ public class PurchaseLog : MonoBehaviour
         InternalAutoWoodUnlockAmount = AutoWoodUnlockAmount;
         AutoWoodButtonText.GetComponent<Text>().text = "Auto Wood - " + InternalAutoWoodUnlockAmount + " Coins";
         FakeAutoWoodButtonText.GetComponent<Text>().text = "Auto Wood - " + InternalAutoWoodUnlockAmount + " Coins";
+        AutoWoodStatDisplay.GetComponent<Text>().text = "Level: " + AutoWood.AutoWoodStatLevel + " CPS: " + AutoWood.InternalWoodIncrease;
 
         if (InternalCoin >= InternalAutoWoodUnlockAmount)
         {
@@ -105,8 +113,9 @@ public class PurchaseLog : MonoBehaviour
         InternalAutoStoneWoodUnlockAmount = AutoStoneWoodUnlockAmount;
         AutoStoneButtonText.GetComponent<Text>().text = "Auto Stone - " + InternalAutoStoneUnlockAmount + " Coins & " + InternalAutoStoneWoodUnlockAmount + " Wood";
         FakeAutoStoneButtonText.GetComponent<Text>().text = "Auto Stone " + InternalAutoStoneUnlockAmount + " Coins & " + InternalAutoStoneWoodUnlockAmount + " Wood";
+        AutoStoneStatDisplay.GetComponent<Text>().text = "Level: " + AutoStone.AutoStoneStatLevel + " CPS: " + AutoStone.InternalStoneIncrease;
 
-        if(InternalCoin >= InternalAutoStoneUnlockAmount && InternalWood >= InternalAutoStoneWoodUnlockAmount)
+        if (InternalCoin >= InternalAutoStoneUnlockAmount && InternalWood >= InternalAutoStoneWoodUnlockAmount)
         {
             FakeAutoStoneButton.SetActive(false);
             AutoStoneButton.SetActive(true);
