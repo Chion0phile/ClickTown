@@ -18,6 +18,14 @@ public class GlobalCount : MonoBehaviour
     private float InternalWoodDisplay;
     private float InternalStoneDisplay;
 
+    public Vector3 StartPosition = new Vector3(500, 250, -500);
+    public Vector3 EndPosition = new Vector3(2150, 250, -500);
+    public float TransitionTime = 3f;
+    private float ElapsedTransitionTime;
+    public GameObject DayNightButton;
+    public GameObject Camera;
+
+
     private void Update()
     {
         //Coins
@@ -34,5 +42,13 @@ public class GlobalCount : MonoBehaviour
         InternalStone = StoneCount;
         InternalStoneDisplay = Mathf.Round(InternalStone * 100f) / 100f;
         StoneCountDisplay.GetComponent<Text>().text = "Stone: " + InternalStoneDisplay;
+    }
+
+    public void DayNightCycle()
+    {
+        //ElapsedTransitionTime += Time.deltaTime;
+        //float percentageComplete = ElapsedTransitionTime / TransitionTime;
+
+        Camera.transform.position = Vector3.Lerp(StartPosition, EndPosition, 1);
     }
 }
