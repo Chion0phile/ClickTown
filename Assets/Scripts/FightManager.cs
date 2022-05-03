@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FightManager : MonoBehaviour
 {
-    public float Dpc;
+    public float DPC;
     public float MonsterHealth;
     public float MonsterHealthMax;
     public float TimeMax;
@@ -14,6 +14,17 @@ public class FightManager : MonoBehaviour
 
     public bool MonsterAlive;
     public bool HaveTime;
+    public static bool DPSEnabled = false;
+    public bool InternalDPSEnabled;
+    public bool DPSActive;
+    public static float DPSIncrease;
+    public static float InternalDPSIncrease;
+    public static float DPSSeconds = 3.2f;
+    public float InternalDPSSeconds;
+    public float DPSLevel;
+    public float DPSSecondsLevel;
+    public float InternalDPSLevel;
+    public static float AutoDPSStatLevel;
 
     public int Kills;
     public int KillsMax;
@@ -25,6 +36,10 @@ public class FightManager : MonoBehaviour
     public GameObject HitButton;
     public GameObject DayNightButton;
     public GameObject Camera;
+    public GameObject DPCButton;
+    public GameObject FakeDPCButton;
+    public GameObject DPSButton;
+    public GameObject FakeDPSButton;
 
     public Text MonsterHealthText;
     public Text KillsCounter;
@@ -33,12 +48,34 @@ public class FightManager : MonoBehaviour
 
     public void ButtonPressed()
     {
-        MonsterHealth -= Dpc;
+        MonsterHealth -= DPC;
     }
 
     public void DayNightCycle()
     {
         Camera.transform.position = Vector3.Lerp(StartPosition, EndPosition, 1);
+    }
+
+    public void ButtonPressedDPS()
+    {
+        if (DPSActive == false)
+        {
+            DPSEnabled = true;
+        }
+        GlobalCount.CoinCount -= PurchaseLog.DPSUnlockAmount;
+        PurchaseLog.DPSUnlockAmount *= 2;
+        AutoDPSStatLevel += 1;
+        DPSLevel += 0.5f;
+        DPSSecondsLevel += 0.2f;
+        InternalDPSIncrease = DPSIncrease + DPSLevel;
+        InternalDPSSeconds = DPSSeconds - DPSSecondsLevel;
+    }
+
+    public void ButtonPressedDPC()
+    {
+        DPC *= 2;
+        GlobalCount.CoinCount -= PurchaseLog.DPCUnlockAmount;
+        PurchaseLog.DPCUnlockAmount *= 2;
     }
 
     public void Update()
@@ -79,6 +116,14 @@ public class FightManager : MonoBehaviour
             Stage++;
             Kills = 0;
         }
+
+        InternalDPSEnabled = DPSEnabled;
+
+        if (DPSActive == false && InternalDPSEnabled == true)
+        {
+            DPSActive = true;
+            StartCoroutine(DPSActiveGo());
+        }
     }
 
     public void NewMonster()
@@ -87,5 +132,12 @@ public class FightManager : MonoBehaviour
         MonsterHealthMax = 10 * Stage;
         CurrentTime = StartingTime + 5f * Stage;
         MonsterAlive = true;
+    }
+
+    IEnumerator DPSActiveGo()
+    {
+        MonsterHealth -= InternalDPSIncrease;
+        yield return new WaitForSeconds(1); //InternalCoinSeconds
+        DPSActive = false;
     }
 }

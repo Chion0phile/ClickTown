@@ -25,6 +25,14 @@ public class PurchaseLog : MonoBehaviour
     public GameObject AutoWoodStatDisplay;
     public GameObject AutoStoneStatDisplay;
     public GameObject ClickingMultiplierStatDisplay;
+    public GameObject DPCButton;
+    public GameObject DPCButtonText;
+    public GameObject FakeDPCButton;
+    public GameObject FakeDPCButtonText;
+    public GameObject DPSButton;
+    public GameObject DPSButtonText;
+    public GameObject FakeDPSButton;
+    public GameObject FakeDPSButtonText;
     public static int AutoCoinUnlockAmount = 50;
     public float InternalAutoCoinUnlockAmount;
     public float InternalCoin;
@@ -38,12 +46,18 @@ public class PurchaseLog : MonoBehaviour
     public static int AutoStoneWoodUnlockAmount = 1000;
     public float InternalAutoStoneWoodUnlockAmount;
     public float InternalStone;
+    public static int DPCUnlockAmount = 100;
+    public float InternalDPCUnlockAmount;
+    public static int DPSUnlockAmount = 200;
+    public float InternalDPSUnlockAmount;
 
     private void Start()
     {
         AutoCoinButton.SetActive(false);
         AutoWoodButton.SetActive(false);
         AutoStoneButton.SetActive(false);
+        DPCButton.SetActive(false);
+        DPSButton.SetActive(false);
     }
 
     public void Update()
@@ -112,7 +126,7 @@ public class PurchaseLog : MonoBehaviour
         InternalAutoStoneUnlockAmount = AutoStoneUnlockAmount;
         InternalAutoStoneWoodUnlockAmount = AutoStoneWoodUnlockAmount;
         AutoStoneButtonText.GetComponent<Text>().text = "Auto Stone - " + InternalAutoStoneUnlockAmount + " Coins & " + InternalAutoStoneWoodUnlockAmount + " Wood";
-        FakeAutoStoneButtonText.GetComponent<Text>().text = "Auto Stone " + InternalAutoStoneUnlockAmount + " Coins & " + InternalAutoStoneWoodUnlockAmount + " Wood";
+        FakeAutoStoneButtonText.GetComponent<Text>().text = "Auto Stone - " + InternalAutoStoneUnlockAmount + " Coins & " + InternalAutoStoneWoodUnlockAmount + " Wood";
         AutoStoneStatDisplay.GetComponent<Text>().text = "Level: " + AutoStone.AutoStoneStatLevel + " CPS: " + AutoStone.InternalStoneIncrease;
 
         if (InternalCoin >= InternalAutoStoneUnlockAmount && InternalWood >= InternalAutoStoneWoodUnlockAmount)
@@ -124,6 +138,40 @@ public class PurchaseLog : MonoBehaviour
         {
             FakeAutoStoneButton.SetActive(true);
             AutoStoneButton.SetActive(false);
+        }
+
+        //DPC
+
+        InternalDPCUnlockAmount = DPCUnlockAmount;
+        DPCButtonText.GetComponent<Text>().text = "DPC - " + InternalDPCUnlockAmount + "Coins";
+        FakeDPCButtonText.GetComponent<Text>().text = "DPC - " + InternalDPCUnlockAmount + "Coins";
+
+        if(InternalCoin >= InternalDPCUnlockAmount)
+        {
+            FakeDPCButton.SetActive(false);
+            DPCButton.SetActive(true);
+        }
+        else
+        {
+            FakeDPCButton.SetActive(true);
+            DPCButton.SetActive(false);
+        }
+
+        //DPS
+
+        InternalDPSUnlockAmount = DPSUnlockAmount;
+        DPSButtonText.GetComponent<Text>().text = "DPS - " + InternalDPSUnlockAmount + "Coins";
+        FakeDPSButtonText.GetComponent<Text>().text = "DPS - " + InternalDPSUnlockAmount + "Coins";
+
+        if(InternalCoin >= InternalDPSUnlockAmount)
+        {
+            FakeDPSButton.SetActive(false);
+            DPSButton.SetActive(true);
+        }
+        else
+        {
+            FakeDPSButton.SetActive(true);
+            DPSButton.SetActive(false);
         }
     }
 }
