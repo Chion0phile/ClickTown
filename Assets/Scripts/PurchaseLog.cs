@@ -9,30 +9,42 @@ public class PurchaseLog : MonoBehaviour
     public GameObject AutoCoinButtonText;
     public GameObject FakeAutoCoinButton;
     public GameObject FakeAutoCoinButtonText;
+    public GameObject AutoCoinStatDisplay;
     public GameObject ClickingMultiplierButton;
     public GameObject ClickingMultiplierButtonText;
     public GameObject FakeClickingMultiplierButton;
     public GameObject FakeClickingMultiplierButtonText;
+    public GameObject ClickingMultiplierStatDisplay;
     public GameObject AutoWoodButton;
     public GameObject AutoWoodButtonText;
     public GameObject FakeAutoWoodButton;
     public GameObject FakeAutoWoodButtonText;
+    public GameObject AutoWoodStatDisplay;
     public GameObject AutoStoneButton;
     public GameObject AutoStoneButtonText;
     public GameObject FakeAutoStoneButton;
     public GameObject FakeAutoStoneButtonText;
-    public GameObject AutoCoinStatDisplay;
-    public GameObject AutoWoodStatDisplay;
     public GameObject AutoStoneStatDisplay;
-    public GameObject ClickingMultiplierStatDisplay;
     public GameObject DPCButton;
     public GameObject DPCButtonText;
     public GameObject FakeDPCButton;
     public GameObject FakeDPCButtonText;
+    public GameObject DPCStatDisplay;
     public GameObject DPSButton;
     public GameObject DPSButtonText;
     public GameObject FakeDPSButton;
     public GameObject FakeDPSButtonText;
+    public GameObject DPSStatDisplay;
+    public GameObject AddTimeButton;
+    public GameObject AddTimeButtonText;
+    public GameObject FakeAddTimeButton;
+    public GameObject FakeAddTimeButtonText;
+    public GameObject AddTimeStatDisplay;
+    public GameObject StunSkillBuyButton;
+    public GameObject StunSkillBuyButtonText;
+    public GameObject FakeStunSkillBuyButton;
+    public GameObject FakeStunSkillBuyButtonText;
+    public GameObject StunSkillBuyStatDisplay;
     public static int AutoCoinUnlockAmount = 50;
     public float InternalAutoCoinUnlockAmount;
     public float InternalCoin;
@@ -50,15 +62,10 @@ public class PurchaseLog : MonoBehaviour
     public float InternalDPCUnlockAmount;
     public static int DPSUnlockAmount = 200;
     public float InternalDPSUnlockAmount;
-
-    private void Start()
-    {
-        AutoCoinButton.SetActive(false);
-        AutoWoodButton.SetActive(false);
-        AutoStoneButton.SetActive(false);
-        DPCButton.SetActive(false);
-        DPSButton.SetActive(false);
-    }
+    public static int AddTimeUnlockAmount = 300;
+    public float InternalAddTimeUnlockAmount;
+    public static int StunSkillBuyUnlockAmount = 500;
+    public float InternalStunSkillBuyUnlockAmount;
 
     public void Update()
     {
@@ -72,7 +79,7 @@ public class PurchaseLog : MonoBehaviour
         InternalClickingMultiplierUnlockAmount = ClickingMultiplierUnlockAmount;
         ClickingMultiplierButtonText.GetComponent<Text>().text = "Clicking Multiplier - " + InternalClickingMultiplierUnlockAmount + " Coins";
         FakeClickingMultiplierButtonText.GetComponent<Text>().text = "Clicking Multiplier - " + InternalClickingMultiplierUnlockAmount + " Coins";
-        ClickingMultiplierStatDisplay.GetComponent<Text>().text = "Level: " + "CPS: ";
+        ClickingMultiplierStatDisplay.GetComponent<Text>().text = "Level: " + MainButtonClick.ClickingMultiplierStatLevel + " CPC: " + MainButtonClick.ClickingMultiplier;
 
         if (InternalCoin >= InternalClickingMultiplierUnlockAmount)
         {
@@ -143,10 +150,11 @@ public class PurchaseLog : MonoBehaviour
         //DPC
 
         InternalDPCUnlockAmount = DPCUnlockAmount;
-        DPCButtonText.GetComponent<Text>().text = "DPC - " + InternalDPCUnlockAmount + "Coins";
-        FakeDPCButtonText.GetComponent<Text>().text = "DPC - " + InternalDPCUnlockAmount + "Coins";
+        DPCButtonText.GetComponent<Text>().text = "DPC - " + InternalDPCUnlockAmount + " Coins";
+        FakeDPCButtonText.GetComponent<Text>().text = "DPC - " + InternalDPCUnlockAmount + " Coins";
+        DPCStatDisplay.GetComponent<Text>().text = "Level: " + FightManager.AutoDPCStatLevel + " DPC: " + FightManager.DPC;
 
-        if(InternalCoin >= InternalDPCUnlockAmount)
+        if (InternalCoin >= InternalDPCUnlockAmount)
         {
             FakeDPCButton.SetActive(false);
             DPCButton.SetActive(true);
@@ -160,10 +168,11 @@ public class PurchaseLog : MonoBehaviour
         //DPS
 
         InternalDPSUnlockAmount = DPSUnlockAmount;
-        DPSButtonText.GetComponent<Text>().text = "DPS - " + InternalDPSUnlockAmount + "Coins";
-        FakeDPSButtonText.GetComponent<Text>().text = "DPS - " + InternalDPSUnlockAmount + "Coins";
+        DPSButtonText.GetComponent<Text>().text = "DPS - " + InternalDPSUnlockAmount + " Coins";
+        FakeDPSButtonText.GetComponent<Text>().text = "DPS - " + InternalDPSUnlockAmount + " Coins";
+        DPSStatDisplay.GetComponent<Text>().text = "Level: " + FightManager.AutoDPSStatLevel + " DPC: " + FightManager.InternalDPSIncrease;
 
-        if(InternalCoin >= InternalDPSUnlockAmount)
+        if (InternalCoin >= InternalDPSUnlockAmount)
         {
             FakeDPSButton.SetActive(false);
             DPSButton.SetActive(true);
@@ -172,6 +181,42 @@ public class PurchaseLog : MonoBehaviour
         {
             FakeDPSButton.SetActive(true);
             DPSButton.SetActive(false);
+        }
+
+        //AddTime
+
+        InternalAddTimeUnlockAmount = AddTimeUnlockAmount;
+        AddTimeButtonText.GetComponent<Text>().text = "Add Time - " + InternalAddTimeUnlockAmount + " Coins";
+        FakeAddTimeButtonText.GetComponent<Text>().text = "Add Time - " + InternalAddTimeUnlockAmount + " Coins";
+        AddTimeStatDisplay.GetComponent<Text>().text = "Level: " + FightManager.AddTimeStatLevel + " Time: " + FightManager.AddTime + " Sec";
+
+        if(InternalCoin >= InternalAddTimeUnlockAmount)
+        {
+            FakeAddTimeButton.SetActive(false);
+            AddTimeButton.SetActive(true);
+        }
+        else
+        {
+            FakeAddTimeButton.SetActive(true);
+            AddTimeButton.SetActive(false);
+        }
+
+        //StunSkillBuy
+
+        InternalStunSkillBuyUnlockAmount = StunSkillBuyUnlockAmount;
+        StunSkillBuyButtonText.GetComponent<Text>().text = "Stun Skill - " + InternalStunSkillBuyUnlockAmount + " Coins";
+        FakeStunSkillBuyButtonText.GetComponent<Text>().text = "Stun Skill - " + InternalStunSkillBuyUnlockAmount + " Coins";
+        StunSkillBuyStatDisplay.GetComponent<Text>().text = "Level: " + FightManager.StunSkillStatLevel + " Time: " + FightManager.StunDuration + " Sec";
+
+        if(InternalCoin >= InternalStunSkillBuyUnlockAmount)
+        {
+            FakeStunSkillBuyButton.SetActive(false);
+            StunSkillBuyButton.SetActive(true);
+        }
+        else
+        {
+            FakeStunSkillBuyButton.SetActive(true);
+            StunSkillBuyButton.SetActive(false);
         }
     }
 }

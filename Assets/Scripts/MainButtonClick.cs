@@ -7,6 +7,7 @@ public class MainButtonClick : MonoBehaviour
 {
     public static float ClickingMultiplier = 1;
     public float InternalClickingMultiplier;
+    public static float ClickingMultiplierStatLevel;
 
     private void Update()
     {
@@ -16,8 +17,10 @@ public class MainButtonClick : MonoBehaviour
 
     public void ButtonPressed()
     {
+        GlobalCount.CoinCount -= PurchaseLog.ClickingMultiplierUnlockAmount;
         ClickingMultiplier *= 1.2f;
         PurchaseLog.ClickingMultiplierUnlockAmount *= 2;
+        ClickingMultiplierStatLevel += 1;
     }
 
     public void ButtonClicked()

@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class FightManager : MonoBehaviour
 {
-    public float DPC;
+    public static float DPC = 1;
     public float MonsterHealth;
     public float MonsterHealthMax;
     public float TimeMax;
     public float CurrentTime = 1f;
     public float StartingTime = 5f;
+    public static float AddTime = 0f;
 
     public bool MonsterAlive;
     public bool HaveTime;
@@ -25,6 +26,16 @@ public class FightManager : MonoBehaviour
     public float DPSSecondsLevel;
     public float InternalDPSLevel;
     public static float AutoDPSStatLevel;
+    public static float AutoDPCStatLevel;
+    public static float AddTimeStatLevel;
+    public static float StunDuration;
+    public float InternalStunDuration;
+    public static float StunSkillStatLevel;
+    public float StunSkillCoolDown;
+
+    public bool Stun = false;
+    public bool StunPressed;
+    public bool StunUnlock = false;
 
     public int Kills;
     public int KillsMax;
@@ -36,15 +47,14 @@ public class FightManager : MonoBehaviour
     public GameObject HitButton;
     public GameObject DayNightButton;
     public GameObject Camera;
-    public GameObject DPCButton;
-    public GameObject FakeDPCButton;
-    public GameObject DPSButton;
-    public GameObject FakeDPSButton;
+    public GameObject StunSkillButton;
+    public GameObject FakeStunSkillButton;
 
     public Text MonsterHealthText;
     public Text KillsCounter;
     public Text StageCounter;
     public Text TimerText;
+    public Text StunSkillCooldownText;
 
     public void ButtonPressed()
     {
@@ -76,12 +86,80 @@ public class FightManager : MonoBehaviour
         DPC *= 2;
         GlobalCount.CoinCount -= PurchaseLog.DPCUnlockAmount;
         PurchaseLog.DPCUnlockAmount *= 2;
+        AutoDPCStatLevel += 1;
+    }
+
+    public void ButtonPressedAddTime()
+    {
+        AddTime += 2f;
+        GlobalCount.CoinCount -= PurchaseLog.AddTimeUnlockAmount;
+        PurchaseLog.AddTimeUnlockAmount *= 2;
+        AddTimeStatLevel += 1;
+    }
+
+    public void ButtoPressedStunSkillBuy()
+    {
+        if (!StunUnlock)
+        {
+            StunUnlock = true;
+            StunSkillButton.SetActive(true);
+        }
+        StunDuration += 3;
+        StunSkillStatLevel++;
+        GlobalCount.CoinCount -= PurchaseLog.StunSkillBuyUnlockAmount;
+        PurchaseLog.StunSkillBuyUnlockAmount *= 2;
+    }
+
+    public void ButtonPressedStunSkill()
+    {
+        if (!StunPressed)
+        {
+            InternalStunDuration = StunDuration;
+            StunSkillCoolDown = 60f;
+            Stun = true;
+            StunPressed = true;
+        }
     }
 
     public void Update()
     {
-        CurrentTime -= 1 * Time.deltaTime;
-        TimerText.text = "Time: " + CurrentTime.ToString ("0") + " sec";
+        if (!StunUnlock)
+        {
+            StunSkillButton.SetActive(false);
+            FakeStunSkillButton.SetActive(false);
+            StunSkillCooldownText.text = " ";
+        }
+        if (StunPressed)
+        {
+            InternalStunDuration -= 1 * Time.deltaTime;
+            StunSkillCoolDown -= 1 * Time.deltaTime;
+            StunSkillCooldownText.text = "Cooldown: " + StunSkillCoolDown.ToString("0") + " Sec";
+            FakeStunSkillButton.SetActive(true);
+        }
+
+        if (StunUnlock && !StunPressed)
+        {
+            StunSkillCooldownText.text = "Ready!";
+            StunSkillButton.SetActive(true);
+            FakeStunSkillButton.SetActive(false);
+        }
+
+        if (InternalStunDuration <= 0)
+        {
+            Stun = false;
+        }
+
+        if(StunSkillCoolDown <= 0)
+        {
+            StunPressed = false;
+        }
+
+        if (!Stun)
+        {
+            CurrentTime -= 1 * Time.deltaTime;
+            TimerText.text = "Time: " + CurrentTime.ToString("0") + " Sec";
+        }
+
         MonsterHealthText.text = MonsterHealth + "/" + MonsterHealthMax + " HP";
         KillsCounter.text = " Kills: " + Kills + "/" + KillsMax;
         StageCounter.text = "Stage: " + Stage;
@@ -130,8 +208,9 @@ public class FightManager : MonoBehaviour
     {
         MonsterHealth = 10 * Stage;
         MonsterHealthMax = 10 * Stage;
-        CurrentTime = StartingTime + 5f * Stage;
+        CurrentTime = AddTime + StartingTime + 5f * Stage;
         MonsterAlive = true;
+        Stun = false;
     }
 
     IEnumerator DPSActiveGo()
