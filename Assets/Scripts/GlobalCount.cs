@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GlobalCount : MonoBehaviour
 {
-    public static float CoinCount = 500;
+    public static float CoinCount = 5000;
     public static float WoodCount;
     public static float StoneCount;
     public GameObject CoinCountDisplay;

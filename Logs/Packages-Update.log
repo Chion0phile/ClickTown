@@ -53,3 +53,11 @@ Update Mode: updateDependencies
 The following packages were updated:
   com.unity.ide.rider from version 2.0.7 to 3.0.6
   com.unity.timeline from version 1.4.8 to 1.5.4
+
+=== Sun May 22 13:52:16 2022
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.shadergraph from version 11.0.0 to 12.1.6

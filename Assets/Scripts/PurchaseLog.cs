@@ -45,6 +45,16 @@ public class PurchaseLog : MonoBehaviour
     public GameObject FakeStunSkillBuyButton;
     public GameObject FakeStunSkillBuyButtonText;
     public GameObject StunSkillBuyStatDisplay;
+    public GameObject MegaHitSkillBuyButton;
+    public GameObject MegaHitSkillBuyButtonText;
+    public GameObject FakeMegaHitSkillBuyButton;
+    public GameObject FakeMegaHitSkillBuyButtonText;
+    public GameObject MegaHitSkillBuyStatDisplay;
+    public GameObject AddTimeSkillBuyButton;
+    public GameObject AddTimeSkillBuyButtonText;
+    public GameObject FakeAddTimeSkillBuyButton;
+    public GameObject FakeAddTimeSkillBuyButtonText;
+    public GameObject AddTimeSkillBuyStatDisplay;
     public static int AutoCoinUnlockAmount = 50;
     public float InternalAutoCoinUnlockAmount;
     public float InternalCoin;
@@ -66,6 +76,10 @@ public class PurchaseLog : MonoBehaviour
     public float InternalAddTimeUnlockAmount;
     public static int StunSkillBuyUnlockAmount = 500;
     public float InternalStunSkillBuyUnlockAmount;
+    public static int MegaHitSkillBuyUnlockAmount = 1000;
+    public float InternalMegaHitSkillBuyUnlockAmount;
+    public static int AddTimeSkillBuyUnlockAmount = 1000;
+    public float InternalAddTimeSkillBuyUnlockAmount;
 
     public void Update()
     {
@@ -217,6 +231,42 @@ public class PurchaseLog : MonoBehaviour
         {
             FakeStunSkillBuyButton.SetActive(true);
             StunSkillBuyButton.SetActive(false);
+        }
+
+        //MegaHitSkillBuy
+
+        InternalMegaHitSkillBuyUnlockAmount = MegaHitSkillBuyUnlockAmount;
+        MegaHitSkillBuyButtonText.GetComponent<Text>().text = "Mega Hit SKill - " + InternalMegaHitSkillBuyUnlockAmount + " Coins";
+        FakeMegaHitSkillBuyButtonText.GetComponent<Text>().text = "Mega Hit Skill - " + InternalMegaHitSkillBuyUnlockAmount + " Coins";
+        MegaHitSkillBuyStatDisplay.GetComponent<Text>().text = "Level: " + FightManager.MegaHitSkillStatLevel + " Mega Hit: " + FightManager.MegaHitSkillValue + " DMG";
+
+        if(InternalCoin >= InternalMegaHitSkillBuyUnlockAmount)
+        {
+            FakeMegaHitSkillBuyButton.SetActive(false);
+            MegaHitSkillBuyButton.SetActive(true);
+        }
+        else
+        {
+            FakeMegaHitSkillBuyButton.SetActive(true);
+            MegaHitSkillBuyButton.SetActive(false);
+        }
+
+        //AddTimeSkillBuy
+
+        InternalAddTimeSkillBuyUnlockAmount = AddTimeSkillBuyUnlockAmount;
+        AddTimeSkillBuyButtonText.GetComponent<Text>().text = "Add Time SKill - " + InternalAddTimeSkillBuyUnlockAmount + " Coins";
+        FakeAddTimeSkillBuyButtonText.GetComponent<Text>().text = "Add Time Skill - " + InternalAddTimeSkillBuyUnlockAmount + " Coins";
+        AddTimeSkillBuyStatDisplay.GetComponent<Text>().text = "Level: " + FightManager.AddTimeSkillStatLevel + " Add: " + FightManager.AddTimeSkillValue + " Sec";
+
+        if (InternalCoin >= InternalAddTimeSkillBuyUnlockAmount)
+        {
+            FakeAddTimeSkillBuyButton.SetActive(false);
+            AddTimeSkillBuyButton.SetActive(true);
+        }
+        else
+        {
+            FakeAddTimeSkillBuyButton.SetActive(true);
+            AddTimeSkillBuyButton.SetActive(false);
         }
     }
 }

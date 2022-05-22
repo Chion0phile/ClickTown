@@ -32,10 +32,24 @@ public class FightManager : MonoBehaviour
     public float InternalStunDuration;
     public static float StunSkillStatLevel;
     public float StunSkillCoolDown;
+    public static float MegaHitStatLevel;
+    public static float MegaHitSkillValue;
+    public float InternalMegaHitSkillValue;
+    public static float MegaHitSkillStatLevel;
+    public float MegaHitSkillCooldown;
+    public static float AddTimeValue;
+    public static float AddTimeSkillValue;
+    public float InternalAddTimeSkillValue;
+    public static float AddTimeSkillStatLevel;
+    public float AddTimeSkillCooldown;
 
     public bool Stun = false;
     public bool StunPressed;
     public bool StunUnlock = false;
+    public bool MegaHitPressed;
+    public bool MegaHitUnlock = false;
+    public bool AddTimePressed;
+    public bool AddTimeUnlock = false;
 
     public int Kills;
     public int KillsMax;
@@ -49,12 +63,18 @@ public class FightManager : MonoBehaviour
     public GameObject Camera;
     public GameObject StunSkillButton;
     public GameObject FakeStunSkillButton;
+    public GameObject MegaHitSkillButton;
+    public GameObject FakeMegaHitSkillButton;
+    public GameObject AddTimeSkillButton;
+    public GameObject FakeAddTimeSkillButton;
 
     public Text MonsterHealthText;
     public Text KillsCounter;
     public Text StageCounter;
     public Text TimerText;
     public Text StunSkillCooldownText;
+    public Text MegaHitSkillCooldownText;
+    public Text AddTimeSkillCooldownText;
 
     public void ButtonPressed()
     {
@@ -121,6 +141,39 @@ public class FightManager : MonoBehaviour
         }
     }
 
+    public void ButtonPressedMegaHitBuy()
+    {
+        if (!MegaHitUnlock)
+        {
+            MegaHitUnlock = true;
+            MegaHitSkillButton.SetActive(true);
+        }
+        MegaHitSkillValue += 100;
+        MegaHitStatLevel++;
+        GlobalCount.CoinCount -= PurchaseLog.MegaHitSkillBuyUnlockAmount;
+        PurchaseLog.MegaHitSkillBuyUnlockAmount *= 2;
+    }
+
+    public void ButtonPressedMegaHitSkill()
+    {
+        if (!MegaHitPressed)
+        {
+            MonsterHealth -= MegaHitSkillValue;
+            MegaHitSkillCooldown = 45f;
+            MegaHitPressed = true;
+        }
+    }
+
+    public void ButtonPressedAddTimeSkillBuy()
+    {
+
+    }
+
+    public void ButtonPressedAddTimeSkill()
+    {
+
+    }
+
     public void Update()
     {
         if (!StunUnlock)
@@ -158,6 +211,32 @@ public class FightManager : MonoBehaviour
         {
             CurrentTime -= 1 * Time.deltaTime;
             TimerText.text = "Time: " + CurrentTime.ToString("0") + " Sec";
+        }
+
+        if (!MegaHitUnlock)
+        {
+            MegaHitSkillButton.SetActive(false);
+            FakeMegaHitSkillButton.SetActive(false);
+            MegaHitSkillCooldownText.text = " ";
+        }
+
+        if(MegaHitUnlock && !MegaHitPressed)
+        {
+            MegaHitSkillCooldownText.text = "Ready!";
+            MegaHitSkillButton.SetActive(true);
+            FakeMegaHitSkillButton.SetActive(false);
+        }
+
+        if (MegaHitPressed)
+        {
+            MegaHitSkillCooldown -= 1 * Time.deltaTime;
+            MegaHitSkillCooldownText.text = "Cooldown: " + MegaHitSkillCooldown.ToString("0") + " Sec";
+            FakeMegaHitSkillButton.SetActive(true);
+        }
+
+        if(MegaHitSkillCooldown <= 0)
+        {
+            MegaHitPressed = false;
         }
 
         MonsterHealthText.text = MonsterHealth + "/" + MonsterHealthMax + " HP";
