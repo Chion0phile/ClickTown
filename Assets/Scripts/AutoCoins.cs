@@ -36,8 +36,6 @@ public class AutoCoins : MonoBehaviour
         CoinSecondsLevel += 0.2f;
         InternalCoinIncrease = CoinIncrease + AutoCoinLevel;
         InternalCoinSeconds = CoinSeconds - CoinSecondsLevel;
-        //FakeAutoCoinButton.SetActive(true);
-        //AutoCoinButton.SetActive(false);
     }
     private void Update()
     {

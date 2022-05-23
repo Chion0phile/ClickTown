@@ -81,7 +81,7 @@ public class UIScript : MonoBehaviour
         PotionShopUI.SetActive(true);
     }
 
-    public void ButtonPressedPotionShopUIButton()
+    public void ButtonPressedPotionShopUIXButton()
     {
         PotionShopUI.SetActive(false);
     }
