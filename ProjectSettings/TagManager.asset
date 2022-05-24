@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: TipWindow
+    uniqueID: 2981365591
+    locked: 0
