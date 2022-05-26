@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AutoWood : MonoBehaviour
 {
-    public GameObject AutoWoodButton;
-    public GameObject FakeAutoWoodButton;
     public static bool AutoWoodEnabled = false;
     public bool InternalAutoWoodEnabled;
     public bool CreatingWood = false;
@@ -23,12 +21,24 @@ public class AutoWood : MonoBehaviour
         InternalWoodIncrease = WoodIncrease;
         InternalWoodSeconds = WoodSeconds;
     }
-    public void ButtonPressed()
+
+    public void ButtonPressedFirst()
     {
-        if (CreatingWood == false)
+        if(CreatingWood == false)
         {
             AutoWoodEnabled = true;
+            GlobalCount.CoinCount -= PurchaseLog.AutoWoodUnlockAmount;
+            PurchaseLog.AutoWoodUnlockAmount *= 2;
+            AutoWoodStatLevel += 1;
+            AutoWoodLevel += 0.5f;
+            WoodSecondsLevel += 0.2f;
+            InternalWoodIncrease = WoodIncrease + AutoWoodLevel;
+            InternalWoodSeconds = WoodSeconds - WoodSecondsLevel;
         }
+    }
+
+    public void ButtonPressed()
+    {
         GlobalCount.CoinCount -= PurchaseLog.AutoWoodUnlockAmount;
         PurchaseLog.AutoWoodUnlockAmount *= 2;
         AutoWoodStatLevel += 1;
@@ -36,8 +46,6 @@ public class AutoWood : MonoBehaviour
         WoodSecondsLevel += 0.2f;
         InternalWoodIncrease = WoodIncrease + AutoWoodLevel;
         InternalWoodSeconds = WoodSeconds - WoodSecondsLevel;
-        //FakeAutoWoodButton.SetActive(true);
-        //AutoWoodButton.SetActive(false);
     }
     private void Update()
     {
@@ -55,33 +63,4 @@ public class AutoWood : MonoBehaviour
         yield return new WaitForSeconds(1); //InternalWoodSeconds
         CreatingWood = false;
     }
-
-    /*    public static bool AutoWoodEnabled = false;
-        public bool InternalAutoWoodEnabled;
-        public bool CreatingWood = false;
-        public static int WoodIncrease = 1;
-        public int InternalWoodIncrease;
-        public float WoodSeconds;
-
-        public void ButtonPressed()
-        {
-            AutoWoodEnabled = true;
-        }
-        private void Update()
-        {
-            InternalWoodIncrease = WoodIncrease;
-            InternalAutoWoodEnabled = AutoWoodEnabled;
-
-            if (CreatingWood == false && AutoWoodEnabled == true)
-            {
-                CreatingWood = true;
-                StartCoroutine(CreateCoin());
-            }
-        }
-        IEnumerator CreateCoin ()
-        {
-            GlobalCount.WoodCount += InternalWoodIncrease;
-            yield return new WaitForSeconds(WoodSeconds);
-            CreatingWood = false;
-        }*/
 }

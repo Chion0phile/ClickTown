@@ -23,12 +23,26 @@ public class AutoStone : MonoBehaviour
         InternalStoneIncrease = StoneIncrease;
         InternalStoneSeconds = StoneSeconds;
     }
-    public void ButtonPressed()
+
+    public void ButtonPressedFirst()
     {
-        if (CreatingStone == false)
+        if(CreatingStone == false)
         {
             AutoStoneEnabled = true;
+            GlobalCount.CoinCount -= PurchaseLog.AutoStoneUnlockAmount;
+            GlobalCount.WoodCount -= PurchaseLog.AutoStoneWoodUnlockAmount;
+            PurchaseLog.AutoStoneUnlockAmount *= 2;
+            PurchaseLog.AutoStoneWoodUnlockAmount *= 2;
+            AutoStoneStatLevel += 1;
+            AutoStoneLevel += 0.5f;
+            StoneSecondsLevel += 0.2f;
+            InternalStoneIncrease = StoneIncrease + AutoStoneLevel;
+            InternalStoneSeconds = StoneSeconds - StoneSecondsLevel;
         }
+    }
+
+    public void ButtonPressed()
+    {
         GlobalCount.CoinCount -= PurchaseLog.AutoStoneUnlockAmount;
         GlobalCount.WoodCount -= PurchaseLog.AutoStoneWoodUnlockAmount;
         PurchaseLog.AutoStoneUnlockAmount *= 2;
@@ -38,8 +52,6 @@ public class AutoStone : MonoBehaviour
         StoneSecondsLevel += 0.2f;
         InternalStoneIncrease = StoneIncrease + AutoStoneLevel;
         InternalStoneSeconds = StoneSeconds - StoneSecondsLevel;
-        //FakeAutoStoneButton.SetActive(true);
-        //AutoStoneButton.SetActive(false);
     }
     private void Update()
     {
@@ -57,33 +69,4 @@ public class AutoStone : MonoBehaviour
         yield return new WaitForSeconds(1); //InternalStoneSeconds
         CreatingStone = false;
     }
-
-    /*public static bool AutoStoneEnabled = false;
-    public bool InternalAutoStoneEnabled;
-    public bool CreatingStone = false;
-    public static int StoneIncrease = 1;
-    public int InternalStoneIncrease;
-    public float StoneSeconds;
-
-    public void ButtonPressed()
-    {
-        AutoStoneEnabled = true;
-    }
-    private void Update()
-    {
-        InternalStoneIncrease = StoneIncrease;
-        InternalAutoStoneEnabled = AutoStoneEnabled;
-
-        if (CreatingStone == false && AutoStoneEnabled == true)
-        {
-            CreatingStone = true;
-            StartCoroutine(CreateCoin());
-        }
-    }
-    IEnumerator CreateCoin ()
-    {
-        GlobalCount.StoneCount += InternalStoneIncrease;
-        yield return new WaitForSeconds(StoneSeconds);
-        CreatingStone = false;
-    }*/
 }

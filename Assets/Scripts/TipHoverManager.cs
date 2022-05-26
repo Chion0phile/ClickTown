@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class TipHoverManager : MonoBehaviour
 {
-    public TextMeshProUGUI TipText;
+    public TextMeshProUGUI TipTextWood;
+    public TextMeshProUGUI TipTextStone;
+    public TextMeshProUGUI TipTextCoins;
     public RectTransform TipWindow;
 
     public static Action<string, Vector2> OnMouseHover;
@@ -31,15 +33,17 @@ public class TipHoverManager : MonoBehaviour
 
     private void ShowTip(string Tip, Vector2 mousePos)
     {
-        TipText.text = Tip;
-        TipWindow.sizeDelta = new Vector2(TipText.preferredWidth > 200 ? 200 : TipText.preferredWidth, TipText.preferredHeight);
+        TipTextWood.text = Tip;
+        TipTextStone.text = HoverTip.TipToShowStone;
+        TipTextCoins.text = HoverTip.TipToShowCoins;
+        //TipWindow.sizeDelta = new Vector2(TipText.preferredWidth > 200 ? 200 : TipText.preferredWidth, TipText.preferredHeight);
         TipWindow.gameObject.SetActive(true);
-        TipWindow.transform.position = new Vector2(mousePos.x + TipWindow.sizeDelta.x * 2, mousePos.y);
+        TipWindow.transform.position = new Vector2(mousePos.x + TipWindow.sizeDelta.x * 1, mousePos.y - 100);
     }
 
     private void HideTip()
     {
-        TipText.text = default;
+        //TipText.text = default;
         TipWindow.gameObject.SetActive(false);
     }
 }

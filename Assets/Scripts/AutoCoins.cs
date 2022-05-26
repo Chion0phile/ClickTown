@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class AutoCoins : MonoBehaviour
 {
-    public GameObject AutoCoinButton;
-    public GameObject FakeAutoCoinButton;
     public static bool AutoCoinEnabled = false;
-    public bool InternalAutoCoinEnabled;
+    public bool InternalAutoCoinEnabled = false;
     public bool CreatingCoin = false;
     public static float CoinIncrease;
     public static float InternalCoinIncrease;
@@ -23,12 +21,24 @@ public class AutoCoins : MonoBehaviour
         InternalCoinIncrease = CoinIncrease;
         InternalCoinSeconds = CoinSeconds;
     }
-    public void ButtonPressed()
+
+    public void ButtonPressedFirst()
     {
         if(CreatingCoin == false)
         {
             AutoCoinEnabled = true;
+            GlobalCount.CoinCount -= PurchaseLog.AutoCoinUnlockAmount;
+            PurchaseLog.AutoCoinUnlockAmount *= 2;
+            AutoCoinStatLevel += 1;
+            AutoCoinLevel += 0.5f;
+            CoinSecondsLevel += 0.2f;
+            InternalCoinIncrease = CoinIncrease + AutoCoinLevel;
+            InternalCoinSeconds = CoinSeconds - CoinSecondsLevel;
         }
+    }
+
+    public void ButtonPressed()
+    {
         GlobalCount.CoinCount -= PurchaseLog.AutoCoinUnlockAmount;
         PurchaseLog.AutoCoinUnlockAmount *= 2;
         AutoCoinStatLevel += 1;
@@ -37,6 +47,7 @@ public class AutoCoins : MonoBehaviour
         InternalCoinIncrease = CoinIncrease + AutoCoinLevel;
         InternalCoinSeconds = CoinSeconds - CoinSecondsLevel;
     }
+
     private void Update()
     {
         InternalAutoCoinEnabled = AutoCoinEnabled;

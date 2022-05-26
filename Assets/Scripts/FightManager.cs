@@ -48,8 +48,8 @@ public class FightManager : MonoBehaviour
     public bool StunUnlock = false;
     public bool MegaHitPressed;
     public bool MegaHitUnlock = false;
-    public bool AddTimePressed;
-    public bool AddTimeUnlock = false;
+    public bool AddTimeSkillPressed;
+    public bool AddTimeSkillUnlock = false;
 
     public int Kills;
     public int KillsMax;
@@ -93,28 +93,76 @@ public class FightManager : MonoBehaviour
             DPSEnabled = true;
         }
         GlobalCount.CoinCount -= PurchaseLog.DPSUnlockAmount;
+        GlobalCount.WoodCount -= PurchaseLog.DPSWoodUnlockAmount;
+        GlobalCount.StoneCount -= PurchaseLog.DPSStoneUnlockAmount;
         PurchaseLog.DPSUnlockAmount *= 2;
         AutoDPSStatLevel += 1;
         DPSLevel += 0.5f;
         DPSSecondsLevel += 0.2f;
         InternalDPSIncrease = DPSIncrease + DPSLevel;
         InternalDPSSeconds = DPSSeconds - DPSSecondsLevel;
+        if(DPSLevel == 1)
+        {
+            PurchaseLog.DPSWoodUnlockAmount += 100;
+        }
+        if(DPSLevel == 1.5)
+        {
+            PurchaseLog.DPSWoodUnlockAmount *= 2;
+            PurchaseLog.DPSStoneUnlockAmount += 50;
+        }
+        if(DPSLevel >= 2)
+        {
+            PurchaseLog.DPSWoodUnlockAmount *= 2;
+            PurchaseLog.DPSStoneUnlockAmount *= 2;
+        }
     }
 
     public void ButtonPressedDPC()
     {
         DPC *= 2;
         GlobalCount.CoinCount -= PurchaseLog.DPCUnlockAmount;
+        GlobalCount.WoodCount -= PurchaseLog.DPCWoodUnlockAmount;
+        GlobalCount.StoneCount -= PurchaseLog.DPCStoneUnlockAmount;
         PurchaseLog.DPCUnlockAmount *= 2;
         AutoDPCStatLevel += 1;
+        if (AutoDPCStatLevel == 2)
+        {
+            PurchaseLog.DPCWoodUnlockAmount += 50;
+        }
+        if (AutoDPCStatLevel == 3)
+        {
+            PurchaseLog.DPCWoodUnlockAmount *= 2;
+            PurchaseLog.DPCStoneUnlockAmount += 25;
+        }
+        if (AutoDPCStatLevel >= 4)
+        {
+            PurchaseLog.DPCWoodUnlockAmount *= 2;
+            PurchaseLog.DPCStoneUnlockAmount *= 2;
+        }
     }
 
     public void ButtonPressedAddTime()
     {
         AddTime += 2f;
         GlobalCount.CoinCount -= PurchaseLog.AddTimeUnlockAmount;
+        GlobalCount.WoodCount -= PurchaseLog.AddTimeWoodUnlockAmount;
+        GlobalCount.StoneCount -= PurchaseLog.AddTimeStoneUnlockAmount;
         PurchaseLog.AddTimeUnlockAmount *= 2;
         AddTimeStatLevel += 1;
+        if (AutoDPCStatLevel == 2)
+        {
+            PurchaseLog.AddTimeWoodUnlockAmount += 100;
+        }
+        if (AutoDPCStatLevel == 3)
+        {
+            PurchaseLog.AddTimeWoodUnlockAmount *= 2;
+            PurchaseLog.AddTimeStoneUnlockAmount += 50;
+        }
+        if (AutoDPCStatLevel >= 4)
+        {
+            PurchaseLog.AddTimeWoodUnlockAmount *= 2;
+            PurchaseLog.AddTimeStoneUnlockAmount *= 2;
+        }
     }
 
     public void ButtoPressedStunSkillBuy()
@@ -127,7 +175,23 @@ public class FightManager : MonoBehaviour
         StunDuration += 3;
         StunSkillStatLevel++;
         GlobalCount.CoinCount -= PurchaseLog.StunSkillBuyUnlockAmount;
+        GlobalCount.WoodCount -= PurchaseLog.StunSkillWoodUnlockAmount;
+        GlobalCount.StoneCount -= PurchaseLog.StunSkillStoneUnlockAmount;
         PurchaseLog.StunSkillBuyUnlockAmount *= 2;
+        if (StunSkillStatLevel == 2)
+        {
+            PurchaseLog.StunSkillWoodUnlockAmount += 100;
+        }
+        if (StunSkillStatLevel == 3)
+        {
+            PurchaseLog.StunSkillWoodUnlockAmount *= 2;
+            PurchaseLog.StunSkillStoneUnlockAmount += 50;
+        }
+        if (StunSkillStatLevel >= 4)
+        {
+            PurchaseLog.StunSkillWoodUnlockAmount *= 2;
+            PurchaseLog.StunSkillStoneUnlockAmount *= 2;
+        }
     }
 
     public void ButtonPressedStunSkill()
@@ -151,7 +215,23 @@ public class FightManager : MonoBehaviour
         MegaHitSkillValue += 100;
         MegaHitStatLevel++;
         GlobalCount.CoinCount -= PurchaseLog.MegaHitSkillBuyUnlockAmount;
+        GlobalCount.WoodCount -= PurchaseLog.MegaHitSkillWoodUnlockAmount;
+        GlobalCount.StoneCount -= PurchaseLog.MegaHitSkillStoneUnlockAmount;
         PurchaseLog.MegaHitSkillBuyUnlockAmount *= 2;
+        if (MegaHitSkillStatLevel == 2)
+        {
+            PurchaseLog.MegaHitSkillWoodUnlockAmount += 100;
+        }
+        if (MegaHitSkillStatLevel == 3)
+        {
+            PurchaseLog.MegaHitSkillWoodUnlockAmount *= 2;
+            PurchaseLog.MegaHitSkillStoneUnlockAmount += 50;
+        }
+        if (MegaHitSkillStatLevel >= 4)
+        {
+            PurchaseLog.MegaHitSkillWoodUnlockAmount *= 2;
+            PurchaseLog.MegaHitSkillStoneUnlockAmount *= 2;
+        }
     }
 
     public void ButtonPressedMegaHitSkill()
@@ -166,12 +246,38 @@ public class FightManager : MonoBehaviour
 
     public void ButtonPressedAddTimeSkillBuy()
     {
-
+        if (!AddTimeSkillUnlock)
+        {
+            AddTimeSkillUnlock = true;
+            AddTimeSkillButton.SetActive(true);
+        }
+        AddTimeSkillValue += 15;
+        AddTimeSkillStatLevel++;
+        GlobalCount.CoinCount -= PurchaseLog.AddTimeSkillBuyUnlockAmount;
+        GlobalCount.WoodCount -= PurchaseLog.AddTimeSkillWoodUnlockAmount;
+        GlobalCount.StoneCount -= PurchaseLog.AddTimeSkillStoneUnlockAmount;
+        PurchaseLog.AddTimeSkillBuyUnlockAmount *= 2;
+        if (AddTimeSkillStatLevel == 2)
+        {
+            PurchaseLog.AddTimeSkillWoodUnlockAmount += 100;
+        }
+        if (AddTimeSkillStatLevel == 3)
+        {
+            PurchaseLog.AddTimeSkillWoodUnlockAmount *= 2;
+            PurchaseLog.AddTimeSkillStoneUnlockAmount += 50;
+        }
+        if (AddTimeSkillStatLevel >= 4)
+        {
+            PurchaseLog.AddTimeSkillWoodUnlockAmount *= 2;
+            PurchaseLog.AddTimeSkillStoneUnlockAmount *= 2;
+        }
     }
 
     public void ButtonPressedAddTimeSkill()
     {
-
+        CurrentTime += AddTimeSkillValue;
+        AddTimeSkillCooldown = 120f;
+        AddTimeSkillPressed = true;
     }
 
     public void Update()
@@ -237,6 +343,32 @@ public class FightManager : MonoBehaviour
         if(MegaHitSkillCooldown <= 0)
         {
             MegaHitPressed = false;
+        }
+
+        if (!AddTimeSkillUnlock)
+        {
+            AddTimeSkillButton.SetActive(false);
+            FakeAddTimeSkillButton.SetActive(false);
+            AddTimeSkillCooldownText.text = " ";
+        }
+
+        if (AddTimeSkillUnlock && !AddTimeSkillPressed)
+        {
+            AddTimeSkillCooldownText.text = "Ready!";
+            AddTimeSkillButton.SetActive(true);
+            FakeAddTimeSkillButton.SetActive(false);
+        }
+
+        if (AddTimeSkillPressed)
+        {
+            AddTimeSkillCooldown -= 1 * Time.deltaTime;
+            AddTimeSkillCooldownText.text = "Cooldown: " + MegaHitSkillCooldown.ToString("0") + " Sec";
+            FakeAddTimeSkillButton.SetActive(true);
+        }
+
+        if (AddTimeSkillCooldown <= 0)
+        {
+            AddTimeSkillPressed = false;
         }
 
         MonsterHealthText.text = MonsterHealth + "/" + MonsterHealthMax + " HP";
