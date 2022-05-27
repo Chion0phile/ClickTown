@@ -54,7 +54,20 @@ public class HoverTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 TipToShowCoins = PurchaseLog.StunSkillBuyUnlockAmount.ToString();
             }
 
-            if(eventData.pointerCurrentRaycast.gameObject.name == "DPCBuyButton")
+            if (eventData.pointerCurrentRaycast.gameObject.name == "ClickingMultiplierBuyButton")
+            {
+                TipToShowWood = PurchaseLog.ClickingMultiplierWoodAmount.ToString();
+                TipToShowStone = PurchaseLog.ClickingMultiplierStoneAmount.ToString();
+                TipToShowCoins = PurchaseLog.ClickingMultiplierUnlockAmount.ToString();
+            }
+            if (eventData.pointerCurrentRaycast.gameObject.name == "FakeClickingMultiplierBuyButton")
+            {
+                TipToShowWood = PurchaseLog.StunSkillWoodUnlockAmount.ToString();
+                TipToShowStone = PurchaseLog.StunSkillStoneUnlockAmount.ToString();
+                TipToShowCoins = PurchaseLog.StunSkillBuyUnlockAmount.ToString();
+            }
+
+            if (eventData.pointerCurrentRaycast.gameObject.name == "DPCBuyButton")
             {
                 TipToShowWood = PurchaseLog.DPCWoodUnlockAmount.ToString();
                 TipToShowStone = PurchaseLog.DPCStoneUnlockAmount.ToString();

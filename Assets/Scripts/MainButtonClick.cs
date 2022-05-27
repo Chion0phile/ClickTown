@@ -18,6 +18,8 @@ public class MainButtonClick : MonoBehaviour
     public void ButtonPressed()
     {
         GlobalCount.CoinCount -= PurchaseLog.ClickingMultiplierUnlockAmount;
+        GlobalCount.WoodCount -= PurchaseLog.ClickingMultiplierWoodAmount;
+        GlobalCount.StoneCount -= PurchaseLog.ClickingMultiplierStoneAmount;
         ClickingMultiplier *= 1.2f;
         PurchaseLog.ClickingMultiplierUnlockAmount *= 2;
         ClickingMultiplierStatLevel += 1;

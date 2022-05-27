@@ -70,6 +70,10 @@ public class PurchaseLog : MonoBehaviour
     public float InternalCoin;
     public static int ClickingMultiplierUnlockAmount = 25;
     public float InternalClickingMultiplierUnlockAmount;
+    public static int ClickingMultiplierWoodAmount;
+    public float InternalClickingMultiplierWoodAmount;
+    public static int ClickingMultiplierStoneAmount;
+    public float InternalClickingMultiplierStoneAmount;
     public static int AutoWoodUnlockAmount = 500;
     public float InternalAutoWoodUnlockAmount;
     public static int AutoWoodWoodUnlockAmount;
@@ -131,6 +135,8 @@ public class PurchaseLog : MonoBehaviour
         //ClickMultiplier
 
         InternalClickingMultiplierUnlockAmount = ClickingMultiplierUnlockAmount;
+        InternalClickingMultiplierWoodAmount = ClickingMultiplierWoodAmount;
+        InternalClickingMultiplierStoneAmount = ClickingMultiplierStoneAmount;
         ClickingMultiplierButtonText.GetComponent<Text>().text = "Clicking Multiplier - " + InternalClickingMultiplierUnlockAmount + " Coins";
         FakeClickingMultiplierButtonText.GetComponent<Text>().text = "Clicking Multiplier - " + InternalClickingMultiplierUnlockAmount + " Coins";
         ClickingMultiplierStatDisplay.GetComponent<Text>().text = "Level: " + MainButtonClick.ClickingMultiplierStatLevel + " CPC: " + MainButtonClick.ClickingMultiplier;
