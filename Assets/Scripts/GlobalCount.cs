@@ -18,8 +18,6 @@ public class GlobalCount : MonoBehaviour
     private float InternalWoodDisplay;
     private float InternalStoneDisplay;
 
-    public Vector3 StartPosition = new Vector3(500, 250, -500);
-    public Vector3 EndPosition = new Vector3(2150, 250, -500);
     public float TransitionTime = 3f;
     private float ElapsedTransitionTime;
     public GameObject DayNightButton;
@@ -49,6 +47,7 @@ public class GlobalCount : MonoBehaviour
         //ElapsedTransitionTime += Time.deltaTime;
         //float percentageComplete = ElapsedTransitionTime / TransitionTime;
 
-        Camera.transform.position = Vector3.Lerp(StartPosition, EndPosition, 1);
+        Camera.transform.position = new Vector3(3322, 25, -208);
+        Camera.transform.Rotate(2, 0, 0);
     }
 }

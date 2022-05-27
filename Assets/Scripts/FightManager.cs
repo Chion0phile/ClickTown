@@ -55,8 +55,8 @@ public class FightManager : MonoBehaviour
     public int KillsMax;
     public int Stage = 1;
 
-    public Vector3 StartPosition = new Vector3(2150, 250, -500);
-    public Vector3 EndPosition = new Vector3(500, 250, -500);
+    public Vector3 StartPosition = new Vector3(3322, 3, -208);
+    public Vector3 EndPosition = new Vector3(10, 25, 3);
 
     public GameObject HitButton;
     public GameObject DayNightButton;
@@ -83,7 +83,8 @@ public class FightManager : MonoBehaviour
 
     public void DayNightCycle()
     {
-        Camera.transform.position = Vector3.Lerp(StartPosition, EndPosition, 1);
+        Camera.transform.position = new Vector3(10, 25, -3);
+        Camera.transform.Rotate(-2, 0, 0);
     }
 
     public void ButtonPressedDPS()
