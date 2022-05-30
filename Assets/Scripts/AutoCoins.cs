@@ -15,6 +15,9 @@ public class AutoCoins : MonoBehaviour
     public float CoinSecondsLevel;
     public float InternalAutoCoinLevel;
     public static float AutoCoinStatLevel;
+    public GameObject House;
+    public GameObject House1;
+    public GameObject House2;
 
     public void Start()
     {
@@ -26,6 +29,7 @@ public class AutoCoins : MonoBehaviour
     {
         if(CreatingCoin == false)
         {
+            House.SetActive(true);
             AutoCoinEnabled = true;
             GlobalCount.CoinCount -= PurchaseLog.AutoCoinUnlockAmount;
             PurchaseLog.AutoCoinUnlockAmount *= 2;
@@ -46,6 +50,14 @@ public class AutoCoins : MonoBehaviour
         CoinSecondsLevel += 0.2f;
         InternalCoinIncrease = CoinIncrease + AutoCoinLevel;
         InternalCoinSeconds = CoinSeconds - CoinSecondsLevel;
+        if(AutoCoinStatLevel == 3)
+        {
+            House1.SetActive(true);
+        }
+        if(AutoCoinStatLevel == 5)
+        {
+            House2.SetActive(true);
+        }
     }
 
     private void Update()

@@ -17,11 +17,17 @@ public class GlobalCount : MonoBehaviour
     private float InternalCoinDisplay;
     private float InternalWoodDisplay;
     private float InternalStoneDisplay;
-
     public float TransitionTime = 3f;
     private float ElapsedTransitionTime;
     public GameObject DayNightButton;
     public GameObject Camera;
+    public GameObject TimerText;
+    public GameObject KillCounter;
+    public GameObject StageCounter;
+    public GameObject MonsterHealthText;
+    public GameObject AddTimeSkillCooldownText;
+    public GameObject StunSkillCooldownText;
+    public GameObject MegaHitSkillCooldownText;
 
 
     private void Update()
@@ -49,5 +55,12 @@ public class GlobalCount : MonoBehaviour
 
         Camera.transform.position = new Vector3(3322, 25, -208);
         Camera.transform.Rotate(2, 0, 0);
+        TimerText.SetActive(true);
+        KillCounter.SetActive(true);
+        StageCounter.SetActive(true);
+        MonsterHealthText.SetActive(true);
+        AddTimeSkillCooldownText.SetActive(true);
+        StunSkillCooldownText.SetActive(true);
+        MegaHitSkillCooldownText.SetActive(true);
     }
 }

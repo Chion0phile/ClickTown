@@ -6,15 +6,15 @@ using UnityEngine.UI;
 public class FightManager : MonoBehaviour
 {
     public static float DPC = 1;
-    public float MonsterHealth;
-    public float MonsterHealthMax;
-    public float TimeMax;
-    public float CurrentTime = 1f;
+    public float MonsterHealth = 10f;
+    public float MonsterHealthMax = 10f;
+    public float TimeMax = 10f;
+    public float CurrentTime = 10f;
     public float StartingTime = 5f;
     public static float AddTime = 0f;
 
-    public bool MonsterAlive;
-    public bool HaveTime;
+    public bool MonsterAlive = true;
+    public bool HaveTime = true;
     public static bool DPSEnabled = false;
     public bool InternalDPSEnabled;
     public bool DPSActive;
@@ -76,6 +76,26 @@ public class FightManager : MonoBehaviour
     public Text MegaHitSkillCooldownText;
     public Text AddTimeSkillCooldownText;
 
+    public GameObject MonsterHealthTextObject;
+    public GameObject KillsCounterObject;
+    public GameObject StageCounterObject;
+    public GameObject TimerTextObject;
+    public GameObject StunSkillCooldownTextObject;
+    public GameObject MegaHitSkillCooldownTextObject;
+    public GameObject AddTimeSkillCooldownTextObject;
+
+    public GameObject ArmoryBase;
+    public GameObject ArmoryUpgrade1;
+    public GameObject ArmoryUpgrade2;
+    public GameObject ArmoryUpgrade3;
+    public GameObject ArmoryUpgrade4;
+
+    public GameObject MagicShopBase;
+    public GameObject MagicShopUpgrade1;
+    public GameObject MagicShopUpgrade2;
+    public GameObject MagicShopUpgrade3;
+    public GameObject MagicShopUpgrade4;
+
     public void ButtonPressed()
     {
         MonsterHealth -= DPC;
@@ -85,6 +105,13 @@ public class FightManager : MonoBehaviour
     {
         Camera.transform.position = new Vector3(10, 25, -3);
         Camera.transform.Rotate(-2, 0, 0);
+        MonsterHealthTextObject.SetActive(false);
+        KillsCounterObject.SetActive(false);
+        StageCounterObject.SetActive(false);
+        TimerTextObject.SetActive(false);
+        StunSkillCooldownTextObject.SetActive(false);
+        MegaHitSkillCooldownTextObject.SetActive(false);
+        AddTimeSkillCooldownTextObject.SetActive(false);
     }
 
     public void ButtonPressedDPS()
@@ -102,19 +129,28 @@ public class FightManager : MonoBehaviour
         DPSSecondsLevel += 0.2f;
         InternalDPSIncrease = DPSIncrease + DPSLevel;
         InternalDPSSeconds = DPSSeconds - DPSSecondsLevel;
-        if(DPSLevel == 1)
+
+        if (DPSLevel == 0.5)
+        {
+            ArmoryUpgrade1.SetActive(true);
+        }
+
+        if (DPSLevel == 1)
         {
             PurchaseLog.DPSWoodUnlockAmount += 100;
+            ArmoryUpgrade2.SetActive(true);
         }
-        if(DPSLevel == 1.5)
+        if (DPSLevel == 1.5)
         {
             PurchaseLog.DPSWoodUnlockAmount *= 2;
             PurchaseLog.DPSStoneUnlockAmount += 50;
+            ArmoryUpgrade3.SetActive(true);
         }
-        if(DPSLevel >= 2)
+        if (DPSLevel >= 2)
         {
             PurchaseLog.DPSWoodUnlockAmount *= 2;
             PurchaseLog.DPSStoneUnlockAmount *= 2;
+            ArmoryUpgrade4.SetActive(true);
         }
     }
 
@@ -126,19 +162,26 @@ public class FightManager : MonoBehaviour
         GlobalCount.StoneCount -= PurchaseLog.DPCStoneUnlockAmount;
         PurchaseLog.DPCUnlockAmount *= 2;
         AutoDPCStatLevel += 1;
+        if (AutoDPCStatLevel == 1)
+        {
+            ArmoryUpgrade1.SetActive(true);
+        }
         if (AutoDPCStatLevel == 2)
         {
             PurchaseLog.DPCWoodUnlockAmount += 50;
+            ArmoryUpgrade2.SetActive(true);
         }
         if (AutoDPCStatLevel == 3)
         {
             PurchaseLog.DPCWoodUnlockAmount *= 2;
             PurchaseLog.DPCStoneUnlockAmount += 25;
+            ArmoryUpgrade3.SetActive(true);
         }
         if (AutoDPCStatLevel >= 4)
         {
             PurchaseLog.DPCWoodUnlockAmount *= 2;
             PurchaseLog.DPCStoneUnlockAmount *= 2;
+            ArmoryUpgrade4.SetActive(true);
         }
     }
 
@@ -179,19 +222,26 @@ public class FightManager : MonoBehaviour
         GlobalCount.WoodCount -= PurchaseLog.StunSkillWoodUnlockAmount;
         GlobalCount.StoneCount -= PurchaseLog.StunSkillStoneUnlockAmount;
         PurchaseLog.StunSkillBuyUnlockAmount *= 2;
+        if (StunSkillStatLevel == 1)
+        {
+            MagicShopUpgrade1.SetActive(true);
+        }
         if (StunSkillStatLevel == 2)
         {
             PurchaseLog.StunSkillWoodUnlockAmount += 100;
+            MagicShopUpgrade2.SetActive(true);
         }
         if (StunSkillStatLevel == 3)
         {
             PurchaseLog.StunSkillWoodUnlockAmount *= 2;
             PurchaseLog.StunSkillStoneUnlockAmount += 50;
+            MagicShopUpgrade3.SetActive(true);
         }
         if (StunSkillStatLevel >= 4)
         {
             PurchaseLog.StunSkillWoodUnlockAmount *= 2;
             PurchaseLog.StunSkillStoneUnlockAmount *= 2;
+            MagicShopUpgrade4.SetActive(true);
         }
     }
 
@@ -219,19 +269,26 @@ public class FightManager : MonoBehaviour
         GlobalCount.WoodCount -= PurchaseLog.MegaHitSkillWoodUnlockAmount;
         GlobalCount.StoneCount -= PurchaseLog.MegaHitSkillStoneUnlockAmount;
         PurchaseLog.MegaHitSkillBuyUnlockAmount *= 2;
+        if (MegaHitSkillStatLevel == 1)
+        {
+            MagicShopUpgrade1.SetActive(true);
+        }
         if (MegaHitSkillStatLevel == 2)
         {
             PurchaseLog.MegaHitSkillWoodUnlockAmount += 100;
+            MagicShopUpgrade2.SetActive(true);
         }
         if (MegaHitSkillStatLevel == 3)
         {
             PurchaseLog.MegaHitSkillWoodUnlockAmount *= 2;
             PurchaseLog.MegaHitSkillStoneUnlockAmount += 50;
+            MagicShopUpgrade3.SetActive(true);
         }
         if (MegaHitSkillStatLevel >= 4)
         {
             PurchaseLog.MegaHitSkillWoodUnlockAmount *= 2;
             PurchaseLog.MegaHitSkillStoneUnlockAmount *= 2;
+            MagicShopUpgrade4.SetActive(true);
         }
     }
 
@@ -258,19 +315,26 @@ public class FightManager : MonoBehaviour
         GlobalCount.WoodCount -= PurchaseLog.AddTimeSkillWoodUnlockAmount;
         GlobalCount.StoneCount -= PurchaseLog.AddTimeSkillStoneUnlockAmount;
         PurchaseLog.AddTimeSkillBuyUnlockAmount *= 2;
+        if (AddTimeSkillStatLevel == 1)
+        {
+            MagicShopUpgrade1.SetActive(true);
+        }
         if (AddTimeSkillStatLevel == 2)
         {
             PurchaseLog.AddTimeSkillWoodUnlockAmount += 100;
+            MagicShopUpgrade2.SetActive(true);
         }
         if (AddTimeSkillStatLevel == 3)
         {
             PurchaseLog.AddTimeSkillWoodUnlockAmount *= 2;
             PurchaseLog.AddTimeSkillStoneUnlockAmount += 50;
+            MagicShopUpgrade3.SetActive(true);
         }
         if (AddTimeSkillStatLevel >= 4)
         {
             PurchaseLog.AddTimeSkillWoodUnlockAmount *= 2;
             PurchaseLog.AddTimeSkillStoneUnlockAmount *= 2;
+            MagicShopUpgrade4.SetActive(true);
         }
     }
 
@@ -309,7 +373,7 @@ public class FightManager : MonoBehaviour
             Stun = false;
         }
 
-        if(StunSkillCoolDown <= 0)
+        if (StunSkillCoolDown <= 0)
         {
             StunPressed = false;
         }
@@ -327,7 +391,7 @@ public class FightManager : MonoBehaviour
             MegaHitSkillCooldownText.text = " ";
         }
 
-        if(MegaHitUnlock && !MegaHitPressed)
+        if (MegaHitUnlock && !MegaHitPressed)
         {
             MegaHitSkillCooldownText.text = "Ready!";
             MegaHitSkillButton.SetActive(true);
@@ -341,7 +405,7 @@ public class FightManager : MonoBehaviour
             FakeMegaHitSkillButton.SetActive(true);
         }
 
-        if(MegaHitSkillCooldown <= 0)
+        if (MegaHitSkillCooldown <= 0)
         {
             MegaHitPressed = false;
         }
@@ -390,18 +454,19 @@ public class FightManager : MonoBehaviour
             NewMonster();
         }
 
-        if (!MonsterAlive && HaveTime)
+        /*if (!MonsterAlive && HaveTime)
         {
             NewMonster();
-        }
+        }*/
 
-        if(MonsterAlive && MonsterHealth <= 0 && HaveTime)
+        if (MonsterAlive && MonsterHealth <= 0 && HaveTime)
         {
             Kills++;
             MonsterAlive = false;
+            NewMonster();
         }
 
-        if(Kills >= KillsMax)
+        if (Kills >= KillsMax)
         {
             Stage++;
             Kills = 0;
@@ -418,9 +483,9 @@ public class FightManager : MonoBehaviour
 
     public void NewMonster()
     {
-        MonsterHealth = 10 * Stage;
         MonsterHealthMax = 10 * Stage;
-        CurrentTime = AddTime + StartingTime + 5f * Stage;
+        MonsterHealth = MonsterHealthMax;
+        CurrentTime = /*AddTime*/ + StartingTime + 5f * Stage;
         MonsterAlive = true;
         Stun = false;
     }

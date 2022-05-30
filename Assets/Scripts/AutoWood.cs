@@ -16,16 +16,20 @@ public class AutoWood : MonoBehaviour
     public float InternalAutoWoodLevel;
     public static float AutoWoodStatLevel;
 
+    public GameObject Sawmill;
+
     public void Start()
     {
         InternalWoodIncrease = WoodIncrease;
         InternalWoodSeconds = WoodSeconds;
+        Sawmill.SetActive(false);
     }
 
     public void ButtonPressedFirst()
     {
         if(CreatingWood == false)
         {
+            Sawmill.SetActive(true);
             AutoWoodEnabled = true;
             GlobalCount.CoinCount -= PurchaseLog.AutoWoodUnlockAmount;
             PurchaseLog.AutoWoodUnlockAmount *= 2;

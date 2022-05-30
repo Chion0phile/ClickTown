@@ -17,17 +17,20 @@ public class AutoStone : MonoBehaviour
     public float StoneSecondsLevel;
     public float InternalAutoStoneLevel;
     public static float AutoStoneStatLevel;
+    public GameObject Mine;
 
     public void Start()
     {
         InternalStoneIncrease = StoneIncrease;
         InternalStoneSeconds = StoneSeconds;
+        Mine.SetActive(false);
     }
 
     public void ButtonPressedFirst()
     {
         if(CreatingStone == false)
         {
+            Mine.SetActive(true);
             AutoStoneEnabled = true;
             GlobalCount.CoinCount -= PurchaseLog.AutoStoneUnlockAmount;
             GlobalCount.WoodCount -= PurchaseLog.AutoStoneWoodUnlockAmount;
