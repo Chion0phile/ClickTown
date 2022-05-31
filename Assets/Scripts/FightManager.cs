@@ -13,6 +13,9 @@ public class FightManager : MonoBehaviour
     public float StartingTime = 5f;
     public static float AddTime = 0f;
 
+    public Image MonsterHealthBar;
+    public Image TimehealthBar;
+
     public bool MonsterAlive = true;
     public bool HaveTime = true;
     public static bool DPSEnabled = false;
@@ -55,6 +58,10 @@ public class FightManager : MonoBehaviour
     public int KillsMax;
     public int Stage = 1;
 
+    public float Reward;
+    public float RewardWood;
+    public float RewardStone;
+
     public Vector3 StartPosition = new Vector3(3322, 3, -208);
     public Vector3 EndPosition = new Vector3(10, 25, 3);
 
@@ -95,6 +102,18 @@ public class FightManager : MonoBehaviour
     public GameObject MagicShopUpgrade2;
     public GameObject MagicShopUpgrade3;
     public GameObject MagicShopUpgrade4;
+
+    public GameObject PotionShopBase;
+    public GameObject PotionShopUpgrade1;
+    public GameObject PotionShopUpgrade2;
+    public GameObject PotionShopUpgrade3;
+    public GameObject PotionShopUpgrade4;
+
+    public GameObject EnemyGhost;
+    public GameObject EnemyGhost1;
+    public GameObject EnemyGhost2;
+    public GameObject EnemyChest;
+    public GameObject EnemyEye;
 
     public void ButtonPressed()
     {
@@ -193,19 +212,26 @@ public class FightManager : MonoBehaviour
         GlobalCount.StoneCount -= PurchaseLog.AddTimeStoneUnlockAmount;
         PurchaseLog.AddTimeUnlockAmount *= 2;
         AddTimeStatLevel += 1;
-        if (AutoDPCStatLevel == 2)
+        if (AddTimeStatLevel == 1)
+        {
+            PotionShopUpgrade1.SetActive(true);
+        }
+        if (AddTimeStatLevel == 2)
         {
             PurchaseLog.AddTimeWoodUnlockAmount += 100;
+            PotionShopUpgrade2.SetActive(true);
         }
-        if (AutoDPCStatLevel == 3)
+        if (AddTimeStatLevel == 3)
         {
             PurchaseLog.AddTimeWoodUnlockAmount *= 2;
             PurchaseLog.AddTimeStoneUnlockAmount += 50;
+            PotionShopUpgrade3.SetActive(true);
         }
-        if (AutoDPCStatLevel >= 4)
+        if (AddTimeStatLevel >= 4)
         {
             PurchaseLog.AddTimeWoodUnlockAmount *= 2;
             PurchaseLog.AddTimeStoneUnlockAmount *= 2;
+            PotionShopUpgrade4.SetActive(true);
         }
     }
 
@@ -345,6 +371,14 @@ public class FightManager : MonoBehaviour
         AddTimeSkillPressed = true;
     }
 
+    private void Start()
+    {
+        CurrentTime = 10f;
+        MonsterHealth = 10f;
+        MonsterHealthMax = 10f;
+        KillsMax = 10;
+    }
+
     public void Update()
     {
         if (!StunUnlock)
@@ -382,6 +416,7 @@ public class FightManager : MonoBehaviour
         {
             CurrentTime -= 1 * Time.deltaTime;
             TimerText.text = "Time: " + CurrentTime.ToString("0") + " Sec";
+            TimehealthBar.fillAmount = CurrentTime / TimeMax;
         }
 
         if (!MegaHitUnlock)
@@ -440,6 +475,9 @@ public class FightManager : MonoBehaviour
         KillsCounter.text = " Kills: " + Kills + "/" + KillsMax;
         StageCounter.text = "Stage: " + Stage;
 
+        MonsterHealthBar.fillAmount = MonsterHealth / MonsterHealthMax;
+
+
         if (CurrentTime <= 0)
         {
             HaveTime = false;
@@ -462,6 +500,18 @@ public class FightManager : MonoBehaviour
         if (MonsterAlive && MonsterHealth <= 0 && HaveTime)
         {
             Kills++;
+            if (AutoWood.AutoWoodEnabled)
+            {
+                RewardWood = 30 * Stage;
+                GlobalCount.WoodCount += RewardWood;
+            }
+            if (AutoStone.AutoStoneEnabled)
+            {
+                RewardStone = 90 * Stage;
+                GlobalCount.StoneCount += RewardStone;
+            }
+            Reward = 10 * Stage;
+            GlobalCount.CoinCount += Reward;
             MonsterAlive = false;
             NewMonster();
         }
@@ -485,9 +535,50 @@ public class FightManager : MonoBehaviour
     {
         MonsterHealthMax = 10 * Stage;
         MonsterHealth = MonsterHealthMax;
-        CurrentTime = /*AddTime*/ + StartingTime + 5f * Stage;
+        CurrentTime = AddTime + StartingTime + 5f * Stage;
         MonsterAlive = true;
         Stun = false;
+        float RandomNumber = Random.Range(1, 5);
+        if(RandomNumber == 1)
+        {
+            EnemyGhost.SetActive(true);
+            EnemyGhost1.SetActive(false);
+            EnemyGhost2.SetActive(false);
+            EnemyChest.SetActive(false);
+            EnemyEye.SetActive(false);
+        }
+        if(RandomNumber == 2)
+        {
+            EnemyGhost.SetActive(false);
+            EnemyGhost1.SetActive(true);
+            EnemyGhost2.SetActive(false);
+            EnemyChest.SetActive(false);
+            EnemyEye.SetActive(false);
+        }
+        if(RandomNumber == 3)
+        {
+            EnemyGhost.SetActive(false);
+            EnemyGhost1.SetActive(false);
+            EnemyGhost2.SetActive(true);
+            EnemyChest.SetActive(false);
+            EnemyEye.SetActive(false);
+        }
+        if(RandomNumber == 4)
+        {
+            EnemyGhost.SetActive(false);
+            EnemyGhost1.SetActive(false);
+            EnemyGhost2.SetActive(false);
+            EnemyChest.SetActive(true);
+            EnemyEye.SetActive(false);
+        }
+        if(RandomNumber == 5)
+        {
+            EnemyGhost.SetActive(false);
+            EnemyGhost1.SetActive(false);
+            EnemyGhost2.SetActive(false);
+            EnemyChest.SetActive(false);
+            EnemyEye.SetActive(true);
+        }
     }
 
     IEnumerator DPSActiveGo()

@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class GlobalCount : MonoBehaviour
 {
-    public static float CoinCount = 5000;
-    public static float WoodCount = 5000;
-    public static float StoneCount = 5000;
+    public static float CoinCount;
+    public static float WoodCount;
+    public static float StoneCount;
     public GameObject CoinCountDisplay;
     public GameObject WoodCountDisplay;
     public GameObject StoneCountDisplay;
@@ -18,7 +18,6 @@ public class GlobalCount : MonoBehaviour
     private float InternalWoodDisplay;
     private float InternalStoneDisplay;
     public float TransitionTime = 3f;
-    private float ElapsedTransitionTime;
     public GameObject DayNightButton;
     public GameObject Camera;
     public GameObject TimerText;
