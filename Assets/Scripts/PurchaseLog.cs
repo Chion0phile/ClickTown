@@ -61,7 +61,7 @@ public class PurchaseLog : MonoBehaviour
     public GameObject FakeAddTimeSkillBuyButton;
     public GameObject FakeAddTimeSkillBuyButtonText;
     public GameObject AddTimeSkillBuyStatDisplay;
-    public static int AutoCoinUnlockAmount = 50;
+    public static int AutoCoinUnlockAmount = 25;
     public float InternalAutoCoinUnlockAmount;
     public static int AutoCoinWoodUnlockAmount;
     public float InternalAutoCoinWoodUnlockAmount;
