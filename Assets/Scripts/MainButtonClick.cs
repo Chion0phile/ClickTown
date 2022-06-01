@@ -20,7 +20,7 @@ public class MainButtonClick : MonoBehaviour
         GlobalCount.CoinCount -= PurchaseLog.ClickingMultiplierUnlockAmount;
         GlobalCount.WoodCount -= PurchaseLog.ClickingMultiplierWoodAmount;
         GlobalCount.StoneCount -= PurchaseLog.ClickingMultiplierStoneAmount;
-        ClickingMultiplier *= 1.2f;
+        ClickingMultiplier *= 2f;
         PurchaseLog.ClickingMultiplierUnlockAmount *= 2;
         ClickingMultiplierStatLevel += 1;
     }

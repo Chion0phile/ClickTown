@@ -15,7 +15,7 @@ D:/Apps/Unity/Projects/ClickTown
 -logFile
 Logs/AssetImportWorker2.log
 -srvPort
-58709
+63847
 Successfully changed project path to: D:/Apps/Unity/Projects/ClickTown
 D:/Apps/Unity/Projects/ClickTown
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,7 +47,7 @@ D:/Apps/Unity/Projects/ClickTown
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Refreshing native plugins compatible for Editor in 6128.70 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 320.83 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.2f1 (d6360bedb9a0)
 [Subsystems] Discovering subsystems at path D:/Apps/Unity/Editors/2021.3.2f1/Editor/Data/Resources/UnitySubsystems
